@@ -2,15 +2,10 @@
 
 from vosk import Model, KaldiRecognizer
 import os
-
-if not os.path.exists("model"):
-    print("Please download the odel from https://alphacephei.com/vosk/models and unpack as 'model' in the current folder.")
-    exit(1)
-
 import pyaudio
 
-model = Model("model")
-re = KaldiRecognizer(model, 16000)
+model = Model('model')
+rec = KaldiRecognizer(model, 16000)
 
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8000)
@@ -21,7 +16,7 @@ while True:
     if len(data) == 0:
         break
     if rec.AcceptWaveform(data):
-        pint(rec.Result())
+        print(rec.Result())
     else:
         print(rec.PartialResult())
 
